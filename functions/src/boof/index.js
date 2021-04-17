@@ -14,8 +14,9 @@ const boof = functions.https.onRequest((req, res) => {
   res.end(twiml.toString());
 });
 
-const buildResponse =  (requestMessage) => {
-  let responseMessage = 'Grrrrr...\n(Try a command like "boof", "bork", or "shake")';
+const buildResponse = (requestMessage) => {
+  let responseMessage =
+   'Grrrrr...\n(Try a command like "boof", "bork", or "shake")';
 
   if (requestMessage.includes('boof')) {
     responseMessage = 'Bork! 🐶';
