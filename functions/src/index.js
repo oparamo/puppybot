@@ -1,6 +1,5 @@
-const functions = require("firebase-functions");
+'use strict';
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
-});
+const boof = require('./boof');
+
+module.exports = {boof};
