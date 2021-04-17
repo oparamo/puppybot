@@ -1,5 +1,5 @@
-"use strict";
+'use strict';
 
-const boof = require("./boof");
+const boof = require('./boof');
 
 module.exports = {boof};
