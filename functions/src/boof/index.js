@@ -6,7 +6,7 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const boof = functions.https.onRequest((req, res) => {
   const twiml = new MessagingResponse();
 
-  const requestMessage = req.body.Body ? req.body.Body.toLowerCase() : null;
+  const requestMessage = req.body.Body ? req.body.Body.toLowerCase() : '';
   const responseMessage = buildResponse(requestMessage);
 
   twiml.message(responseMessage);
