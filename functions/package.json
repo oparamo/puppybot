@@ -1,6 +1,6 @@
 {
   "name": "functions",
-  "description": "Firebase Cloud Functions for talkingdog.",
+  "description": "Firebase Cloud Functions for puppybot.",
   "scripts": {
     "lint": "eslint .",
     "serve": "firebase emulators:start --only functions",
