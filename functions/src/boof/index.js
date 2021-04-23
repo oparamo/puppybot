@@ -3,30 +3,50 @@
 const functions = require('firebase-functions');
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
+const recentNumbers = {};
+
 const boof = functions.https.onRequest((req, res) => {
-  const twiml = new MessagingResponse();
+  const response = buildTwimlResponse(req.body.Body, req.body.From);
 
-  const requestMessage = req.body.Body ? req.body.Body.toLowerCase() : '';
-  const responseMessage = buildResponse(requestMessage);
-
-  twiml.message(responseMessage);
   res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
+  res.end(response.toString());
 });
 
-const buildResponse = (requestMessage) => {
-  let responseMessage =
-   'Grrrrr...\n(Try a command like "boof", "bork", or "shake")';
+const buildTwimlResponse = (textBody, fromNumber) => {
+  const response = new MessagingResponse();
+  const message = response.message();
 
-  if (requestMessage.includes('boof')) {
-    responseMessage = 'Bork! 🐶';
+  const isABother = isDoingABother(fromNumber);
+  const requestMessage = textBody ? textBody.toLowerCase() : '';
+
+  let messageBody =
+    'Grrrrr...\n(Try a command like "boof", "bork", or "shake")';
+
+  if (isABother) {
+    messageBody =
+      'You\'re doing me a bother, you can talk to me again after my nap... 💤😴💤';
+
+    message.media('https://bittersweet-earwig-8551.twil.io/assets/nap.JPEG');
+  } else if (requestMessage.includes('boof')) {
+    messageBody = 'Bork! 🐶';
   } else if (requestMessage.includes('bork')) {
-    responseMessage = 'Boof! 🐶';
+    messageBody = 'Boof! 🐶';
   } else if (requestMessage.includes('shake')) {
-    responseMessage = '🐾';
+    messageBody = '🐾';
   }
 
-  return responseMessage;
+  message.body(messageBody);
+
+  return response;
+};
+
+const isDoingABother = (fromNumber) => {
+  let messageCount = recentNumbers[fromNumber] || 0;
+
+  messageCount = messageCount + 1;
+  recentNumbers[fromNumber] = messageCount;
+
+  return messageCount > 5;
 };
 
 module.exports = boof;
