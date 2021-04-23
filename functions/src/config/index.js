@@ -3,11 +3,13 @@
 
 const functions = require('firebase-functions');
 
-const alertSchedule = functions.config().puppybot.birkenstockalert.schedule || process.env.BIRKENSTOCKALERT_SCHEDULE || '5 * /3 * * *';
-const alertSMS = functions.config().puppybot.birkenstockalert.sms || process.env.BIRKENSTOCKALERT_SMS || null;
-const alertURL = functions.config().puppybot.birkenstockalert.url || process.env.BIRKENSTOCKALERT_URL || null;
-const timeZone = functions.config().puppybot.birkenstockalert.timeZone || process.env.BIRKENSTOCKALERT_TIMEZONE || 'America/Chicago';
+const schedule = process.env.BIRKENSTOCKALERT_SCHEDULE || functions.config().puppybot.birkenstockalert.schedule || '5 * /3 * * *';
+const sms = process.env.BIRKENSTOCKALERT_SMS || functions.config().puppybot.birkenstockalert.sms || null;
+const timezone = process.env.BIRKENSTOCKALERT_TIMEZONE || functions.config().puppybot.birkenstockalert.timezone || 'America/Chicago';
+const url = process.env.BIRKENSTOCKALERT_URL || functions.config().puppybot.birkenstockalert.url || null;
 
-const config = {alertSchedule, alertSMS, alertURL, timeZone};
+const birkenstockalert = {schedule, sms, timezone, url};
+
+const config = {birkenstockalert};
 
 module.exports = config;
