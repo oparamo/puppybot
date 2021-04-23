@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Firebase Cloud Functions for puppybot.",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
     "start": "npm run shell",
