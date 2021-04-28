@@ -46,7 +46,7 @@ const isDoingABother = (fromNumber) => {
   messageCount = messageCount + 1;
   recentNumbers[fromNumber] = messageCount;
 
-  return messageCount > 5;
+  return messageCount > 4;
 };
 
 module.exports = boof;
