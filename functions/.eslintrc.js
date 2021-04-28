@@ -1,11 +1,15 @@
 module.exports = {
   root: true,
   env: {
-    es6: true,
+    browser: true,
+    es2020: true,
     node: true,
   },
   extends: [
     'eslint:recommended',
     'google',
   ],
+  rules: {
+    'max-len': ['warn', {'code': 120}],
+  },
 };
