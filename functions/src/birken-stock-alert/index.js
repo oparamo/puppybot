@@ -7,10 +7,12 @@ const config = require('../config');
 
 const accountSid = config.birkenstockalert.twilioAccountSid;
 const authToken = config.birkenstockalert.twilioAuthToken;
-const fromSms = config.birkenstockalert.fromSms;
-const toSms = config.birkenstockalert.toSms;
 
 const client = require('twilio')(accountSid, authToken);
+
+const alertMsg = config.birkenstockalert.alertMsg;
+const fromSms = config.birkenstockalert.fromSms;
+const toSms = config.birkenstockalert.toSms;
 
 const url = 'https://www.dsw.com/en/us/product/birkenstock-arizona-slide-sandal---womens/171995';
 const uA = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0';
@@ -46,7 +48,7 @@ const birkenStockAlert = functions.pubsub.schedule('every 3 hours')
       if (desiredSizes.length > 0) {
         console.log('shoes in size/color are in stock');
 
-        const body = `Your birkenstocks... are in stock! 😍 P.S. I love you kibby 🐱\n${url}`;
+        const body = `${alertMsg}\n${url}`;
 
         await client.messages.create({body, from: fromSms, to: toSms});
       } else {
@@ -57,4 +59,3 @@ const birkenStockAlert = functions.pubsub.schedule('every 3 hours')
     });
 
 module.exports = birkenStockAlert;
-
